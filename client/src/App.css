@@ -1,0 +1,61 @@
+/* app.css */
+
+/* Reseteo global de Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Estilos personalizados de reseteo global */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: inherit;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeSpeed;
+  background-color: #f9fafb; /* Color claro por defecto */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+
+textarea {
+  resize: none;
+}
