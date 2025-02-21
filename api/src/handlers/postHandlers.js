@@ -1,5 +1,7 @@
+const { uploadToCloudinary } = require("../config/cloudinaryService");
 const createNewPostController = require("../controllers/post/createNewPostController");
 const getAllPostsController = require("../controllers/post/getAllPostsController");
+
 
 
 
@@ -35,10 +37,24 @@ const getAllPostsHandler = async (req, res, next) => {
     }
 }
 
+const uploadMultimediaHandler = async (req, res, next) => {
+
+    console.log("pase")
+    const fileBuffer = req.file.buffer.toString("base64");
+
+    try {
+        const response = await uploadToCloudinary(`data:${req.file.mimetype};base64,${fileBuffer}`);
+        res.status(200).json({ url: response.secure_url, public_id: response.public_id })
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 
 module.exports = {
     createNewPostHandler,
     getAllPostsHandler,
-    getUserPostsHandler
+    getUserPostsHandler,
+    uploadMultimediaHandler
 }

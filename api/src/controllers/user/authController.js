@@ -19,14 +19,14 @@ const localLogin = (req, res, next) => {
         return res.status(500).json({ error: "Error al iniciar sesión" });
       }
 
-      // deberia de redirigir a la creacion de profile del front para llenar el formulario 
-      
+
+
       //FORMATO PARA RECIBIR ALERTAS EN EL FRONT END TITLE TYPE (BASADO EN SWEETALERT) TEXT (MENSAJE PARA MOSTRAR )
       "success", "Welcome!"
       return res.json({
         text: "You are now logged in",
-        type : "success",
-        title : "Welcome!",
+        type: "success",
+        title: "Welcome!",
         success: true
 
       });
