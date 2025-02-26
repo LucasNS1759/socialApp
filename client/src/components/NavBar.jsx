@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../redux/features/user/userSlice";
+import { UserSelectIsLoggedIn } from "../redux/features/user/userSlice";
 import { handlerLogOut } from "../utils/handlerLogOut";
 
 const NavBar = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(UserSelectIsLoggedIn);
   const dispatch = useDispatch();
 
   return (

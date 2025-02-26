@@ -1,7 +1,9 @@
+import { getFileReference, setFileReference } from "../../redux/features/posts/fileStore";
+import { setFileSlice, setPreviewInfo } from "../../redux/features/posts/postSlice";
 
+// responsavilidad de esta funcion validar que el file sea valido y actualizar los estados de react dependiendo del exito 
+const fileValidations = (file, dispatch, alert, postInformation) => {
 
-const fileValidations = (file, dispatch, alert, data, setData) => {
-    console.log(file);
     if (!file) return;
 
     const validFormats = ["image/jpeg", "image/png", "image/gif", "video/mp4", "video/webm"];
@@ -17,11 +19,22 @@ const fileValidations = (file, dispatch, alert, data, setData) => {
         return false
     }
     const url = URL.createObjectURL(file);
-    setData({
-        ...data,
-        previewUrl: url,
-        previewType: file.type
-    })
+    dispatch(
+        setPreviewInfo({
+            ...postInformation,
+            previewUrl: url,
+            previewType: file.type
+        }))
+
+    //guardo la referencia extera a redux
+    setFileReference(file)
+    //la obtengo 
+    const reference = getFileReference()
+
+    //despacho la accion y guardo solo el name de esa referencia que es el file completo, peeeero de esta manera mantengo viva la referencia si navego entre paginas ya que la referencia vive en el tiempo de vida de redux 
+    dispatch(setFileSlice(reference.name))
+
+
 
 }
 

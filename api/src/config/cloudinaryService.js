@@ -1,3 +1,5 @@
+const AppError = require("../utils/appError");
+
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
 
@@ -10,7 +12,15 @@ cloudinary.config({
 })
 
 const uploadToCloudinary = async (file) => {
-    return await cloudinary.uploader.upload(file, { resource_type: "auto" })
+    try {
+        const url = await cloudinary.uploader.upload(file, { resource_type: "auto" })
+        //fs.unlinkSync(file); // Borra el archivo temporal después de subirlo
+        return url;
+    } catch (error) {
+    console.error(error);
+        throw new AppError("error uploading file: " + error.message)
+    }
+
 }
 
 module.exports = { uploadToCloudinary }

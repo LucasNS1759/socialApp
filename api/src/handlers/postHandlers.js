@@ -6,11 +6,12 @@ const getAllPostsController = require("../controllers/post/getAllPostsController
 
 
 const createNewPostHandler = async (req, res, next) => {
-    const { media, content } = req.body;
+
+    const { multimedia, text, privacy, scheduler } = req.body;
     const { id } = req.user.dataValues
-    console.log(content)
+
     try {
-        const response = await createNewPostController(id, media, content)
+        const response = await createNewPostController(id, multimedia, text, privacy, scheduler)
         res.status(200).json(response);
     } catch (error) {
         next(error);
@@ -27,7 +28,7 @@ const getUserPostsHandler = async (req, res, next) => {
 }
 
 const getAllPostsHandler = async (req, res, next) => {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 5 } = req.query;
     try {
         const response = await getAllPostsController(page, limit)
         res.status(200).json(response)
@@ -39,7 +40,7 @@ const getAllPostsHandler = async (req, res, next) => {
 
 const uploadMultimediaHandler = async (req, res, next) => {
 
-    console.log("pase")
+  
     const fileBuffer = req.file.buffer.toString("base64");
 
     try {

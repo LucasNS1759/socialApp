@@ -10,9 +10,10 @@ import showAlert from "./utils/sweetAlertConfig";
 import { useEffect } from "react";
 import {
   fetchLoginStatus,
-  selectIsLoading,
-  selectError,
-  selectIsLoggedIn,
+
+  UserSelectError,
+  UserSelectIsLoading,
+  UserSelectIsLoggedIn,
 } from "./redux/features/user/userSlice";
 import Loading from "./components/Loading";
 import { alert } from "./redux/features/alerts/alertsSlice";
@@ -23,9 +24,9 @@ function App() {
   const dispatch = useDispatch();
 
   const { title, type, text, isVisible } = useSelector((state) => state.alert);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const isLoggedIn = useSelector(UserSelectIsLoggedIn);
+  const isLoading = useSelector(UserSelectIsLoading);
+  const error = useSelector(UserSelectError);
 
   useEffect(() => {
     dispatch(fetchLoginStatus());

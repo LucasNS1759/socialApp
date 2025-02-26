@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
 import { checkIsLoggedIn } from "../../../services/auth/checkLogin"
 
 const initialState = {
@@ -49,7 +49,7 @@ const userSlice = createSlice({
                 state.isLoggedIn = action.payload; // Actualizás si está logueado
             })
             .addCase(fetchLoginStatus.rejected, (state, action) => {
-            
+
                 // Acción cuando el thunk falla
                 state.isLoading = false;        // Terminó de cargar
                 state.isLoggedIn = false;       // Asumís que no está logueado
@@ -64,7 +64,7 @@ export default userSlice.reducer;
 
 //SELECTORES 
 
-export const selectIsLoading = (state) => state.user.isLoading;
-export const selectError = (state) => state.user.error;
-export const selectIsLoggedIn = (state) => state.user.isLoggedIn;
+export const UserSelectIsLoading = (state) => state.user.isLoading;
+export const UserSelectError = (state) => state.user.error;
+export const UserSelectIsLoggedIn = (state) => state.user.isLoggedIn;
 export const selectUser = (state) => state.user.user;

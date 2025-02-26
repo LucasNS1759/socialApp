@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
     title: "",
     type: "",
@@ -17,12 +18,11 @@ const alertSlice = createSlice({
             state.title = action.payload.title;
             state.text = action.payload.text;
             state.isVisible = true
+            
+            
         },
         hideAlert: (state) => {
-            state.isVisible = false;
-            state.text = "";
-            state.title = "";
-            state.type = ""
+            Object.assign(state, initialState);
         }
     }
 })

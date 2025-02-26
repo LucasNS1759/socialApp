@@ -3,7 +3,16 @@ import PrivacyIcon from "../assets/icons/PrivacyIncon";
 import ScheduleIcon from "../assets/icons/ScheduleIcon";
 import TrashIcon from "../assets/icons/TrashIcon";
 
-const PostOptionContainer = ({ privacy, onchange, handlerClearForm }) => {
+const PostOptionContainer = ({
+  privacy,
+  onchange,
+  isLoading,
+  handleSubmit,
+  dispatch,
+  clearPost,
+  isLoggedIn,
+  postInformation,
+}) => {
   return (
     /* Contenedor de botones */
     <div className="flex mt-5 w-full">
@@ -59,7 +68,7 @@ const PostOptionContainer = ({ privacy, onchange, handlerClearForm }) => {
 
         {/* Botón de descartar */}
         <button
-          onClick={handlerClearForm}
+          onClick={() => dispatch(clearPost())}
           title="Descartar"
           className="p-4 h-fit border rounded-full hover:bg-gray-200"
         >
@@ -69,8 +78,23 @@ const PostOptionContainer = ({ privacy, onchange, handlerClearForm }) => {
 
       {/* Contenedor de 1/3 para el botón "Publicar" con línea divisoria */}
       <div className="flex justify-center items-center w-1/3 border-l-4 border-gray-200">
-        <button className="h-10 w-20 rounded-full bg-slate-200 hover:bg-gray-300">
-          Publicar
+        <button
+          title={`${
+            isLoggedIn && !postInformation.text.trim().length
+              ? "no puedes crear un post vacio"
+              : !isLoggedIn
+              ? "debes estar logueado para poder hacer un post"
+              : "crea un nuevo post "
+          }`}
+          disabled={!isLoggedIn || !postInformation.text.trim().length}
+          onClick={handleSubmit}
+          className={`h-10 w-24 rounded-full ${
+            !isLoggedIn || !postInformation.text.trim().length
+              ? "bg-slate-300  text-white cursor-not-allowed"
+              : "bg-slate-200 hover:bg-gray-300"
+          } `}
+        >
+          {isLoading ? "cargando..." : "Publicar"}
         </button>
       </div>
     </div>
