@@ -1,6 +1,8 @@
 
-import { setPreviewInfo } from "../redux/features/posts/postSlice";
-import fileValidations from "./inputFileFunctions/fileValidations";
+
+import { setPreviewInfo } from "../../redux/features/posts/postSlice";
+import fileValidations from "../inputFileFunctions/fileValidations";
+
 
 
 const handlerOnchange = (e, postInformation,dispatch,

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { clearFileReference, setFileReference } from "./fileStore";
+import { clearFileReference } from "./fileStore";
 import axios from "axios"
 
 
@@ -109,8 +109,14 @@ const postSlice = createSlice({
         },
         //limpio todo el formmulario con el boton del formulario
         clearPost: (state) => {
+            document.getElementById("fileInput").value = "";
             Object.assign(state, initialState);
+
+        },
+        removeFormImage: (state) => {
             clearFileReference()
+            document.getElementById("fileInput").value = "";
+            return { ...state, previewUrl: "", previewType: "", fileSliceReference: null }
         },
         //action para guardar la referencia del file sin error de serealizacion
         setFileSlice: (state, action) => {
@@ -132,7 +138,7 @@ const postSlice = createSlice({
         }
 
     },
-    
+
 
     extraReducers: (builder) => {
         builder
@@ -158,11 +164,11 @@ const postSlice = createSlice({
                 state.loading.submitPost = true;
                 state.error.submitPost = null;
                 state.loadingProgress = 85;
-                
+
             })
             .addCase(submitPost.fulfilled, (state) => {
                 state.loading.submitPost = false;
-               
+
             })
             .addCase(submitPost.rejected, (state, action) => {
                 state.loading.submitPost = false;
@@ -192,7 +198,7 @@ const postSlice = createSlice({
 });
 
 
-export const { setPostInfo, clearPost, setFileSlice, setPreviewInfo } = postSlice.actions;
+export const { setPostInfo, clearPost, setFileSlice, setPreviewInfo, removeFormImage } = postSlice.actions;
 export default postSlice.reducer;
 
 //SELECTORES
@@ -200,3 +206,8 @@ export default postSlice.reducer;
 export const selectPostInfo = (state) => state.post
 export const selectPostIsSubmitting = (state) => state.post.isSubmitting
 export const selectPostIsPreviewUrl = (state) => state.post.previewUrl
+export const selectLoadingProgress = (state) => state.post.loadingProgress
+export const selectChargingStates = (state) =>
+    state.post.loading.uploadMultimedia ||
+    state.post.loading.uploadAndSubmitPost ||
+    state.post.loading.submitPost

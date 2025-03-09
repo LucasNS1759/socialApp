@@ -18,7 +18,7 @@ const getAllPostsController = async (page, limit) => {
           include: [
             {
               model: Profile,
-              attributes: ["name", "surName", "profilePicture", "id"]
+              attributes: ["name", "profilePicture", "id","gender"]
             }
           ]
         },

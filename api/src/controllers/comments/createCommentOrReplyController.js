@@ -3,7 +3,7 @@ const AppError = require("../../utils/appError");
 
 const createCommentOrReplyController = async (postId, parentId, userId, content, media) => {
 
-console.log(userId)
+
     const post = await Post.findByPk(postId);
     const user = await User.findByPk(userId);
 
@@ -22,6 +22,8 @@ console.log(userId)
 
         newComment = await parentComment.createReply({ userId, content, media,postId });
         await newComment.setUser(user)
+        console.log(newComment);
+        console.log(user);
     } else {
 
         newComment = await post.createComment({ userId, content, media });

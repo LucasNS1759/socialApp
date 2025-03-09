@@ -6,7 +6,7 @@ import SingUp from "./pages/SingUp";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import showAlert from "./utils/sweetAlertConfig";
+
 import { useEffect } from "react";
 import {
   fetchLoginStatus,
@@ -17,7 +17,8 @@ import {
 } from "./redux/features/user/userSlice";
 import Loading from "./components/Loading";
 import { alert } from "./redux/features/alerts/alertsSlice";
-import Practica from "./components/Practica";
+
+import showAlert from "./utils/settings/sweetAlertConfig";
 
 function App() {
   const location = useLocation();
@@ -63,7 +64,7 @@ function App() {
           path="/SingUp"
           element={isLoggedIn ? <Navigate to={"/"} /> : <SingUp />}
         />
-        <Route path="/practica" element={<Practica/>}/>
+       
       </Routes>
       <Footer />
     </div>

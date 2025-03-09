@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import {
   singUpInitialValue,
   singUpValidationSchema,
-} from "../utils/authFormikConfigs";
+} from "../utils/settings/authFormikConfigs";
 import { singUpUsers } from "../services/auth/singUpUser";
 import { useNavigate } from "react-router-dom";
 import { alert } from "../redux/features/alerts/alertsSlice";

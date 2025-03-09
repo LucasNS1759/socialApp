@@ -1,18 +1,33 @@
+// REDUX
+import { useDispatch, useSelector } from "react-redux";
+// ICONOS
 import MultimediaIcon from "../assets/icons/MultimediaIcon";
 import PrivacyIcon from "../assets/icons/PrivacyIncon";
 import ScheduleIcon from "../assets/icons/ScheduleIcon";
 import TrashIcon from "../assets/icons/TrashIcon";
-
-const PostOptionContainer = ({
-  privacy,
-  onchange,
-  isLoading,
-  handleSubmit,
-  dispatch,
+// SLICES
+import {
   clearPost,
-  isLoggedIn,
-  postInformation,
-}) => {
+  selectChargingStates,
+  selectPostInfo,
+} from "../redux/features/posts/postSlice";
+import { alert } from "../redux/features/alerts/alertsSlice";
+import { UserSelectIsLoggedIn } from "../redux/features/user/userSlice";
+import handlerOnchange from "../utils/handlers/handlerOnchange";
+import handleSubmitPost from "../utils/handlers/handlerSubmitPost";
+import { getFileReference } from "../redux/features/posts/fileStore";
+import { useNavigate } from "react-router-dom";
+import HiddenInput from "./HiddenInput";
+import IconButton from "./IconButton";
+
+const PostOptionContainer = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoading = useSelector(selectChargingStates);
+  const postInformation = useSelector(selectPostInfo);
+  const isLoggedIn = useSelector(UserSelectIsLoggedIn);
+  const file = getFileReference();
+
   return (
     /* Contenedor de botones */
     <div className="flex mt-5 w-full">
@@ -20,60 +35,56 @@ const PostOptionContainer = ({
       <div className="flex justify-around items-center w-2/3">
         {/* Botón de multimedia */}
 
-        <input
-          className="hidden"
-          name="mutimedia"
-          type="file"
-          id="fileInput"
-          onChange={onchange}
+        <HiddenInput
+          type={"file"}
+          name={"multimedia"}
+          id={"fileInput"}
+          onChange={(e) => handlerOnchange(e, postInformation, dispatch, alert)}
         />
 
-        <label
+        <IconButton
+          icon={MultimediaIcon}
           title="Multimedia"
-          className="p-4 h-fit cursor-pointer rounded-full hover:bg-gray-200"
           htmlFor="fileInput"
-        >
-          <MultimediaIcon />
-        </label>
+        />
 
         {/* Botón de privacidad */}
-
-        <input
-          type="checkbox"
-          name="privacy"
-          id="privacy"
-          onChange={onchange}
-          className="hidden"
+        <HiddenInput
+          type={"checkbox"}
+          name={"privacy"}
+          id={"privacy"}
+          onChange={(e) => handlerOnchange(e, postInformation, dispatch, alert)}
         />
 
-        <label
-          htmlFor="privacy"
+        <IconButton
+          icon={PrivacyIcon}
           title={
-            !privacy
+            !postInformation.privacy
               ? "Post Publico toca para que sea privado"
               : "Post Privado toca para que sea publico"
           }
-          className="p-4 h-fit  rounded-full hover:bg-gray-200 cursor-pointer"
-        >
-          <PrivacyIcon privacy={privacy} />
-        </label>
+          htmlFor="privacy"
+        />
 
-        {/* Botón de programar post */}
-        <button
-          title="Programa un post"
-          className="p-4 h-fit border rounded-full hover:bg-gray-200"
-        >
-          <ScheduleIcon />
-        </button>
+        {/* Botón de programar */}
+        <HiddenInput
+          type={"time"}
+          name={"schedule"}
+          id={"schedule"}
+          // onChange={(e) => handlerOnchange(e, postInformation, dispatch, alert)}
+        />
+        <IconButton
+          icon={ScheduleIcon}
+          title={"Programa un post"}
+          htmlFor={"schedule"}
+        />
 
         {/* Botón de descartar */}
-        <button
-          onClick={() => dispatch(clearPost())}
+        <IconButton
+          icon={TrashIcon}
           title="Descartar"
-          className="p-4 h-fit border rounded-full hover:bg-gray-200"
-        >
-          <TrashIcon />
-        </button>
+          onClick={() => dispatch(clearPost())}
+        />
       </div>
 
       {/* Contenedor de 1/3 para el botón "Publicar" con línea divisoria */}
@@ -87,7 +98,9 @@ const PostOptionContainer = ({
               : "crea un nuevo post "
           }`}
           disabled={!isLoggedIn || !postInformation.text.trim().length}
-          onClick={handleSubmit}
+          onClick={() =>
+            handleSubmitPost(postInformation, file, dispatch, alert, navigate)
+          }
           className={`h-10 w-24 rounded-full ${
             !isLoggedIn || !postInformation.text.trim().length
               ? "bg-slate-300  text-white cursor-not-allowed"

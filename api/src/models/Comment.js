@@ -8,11 +8,11 @@ module.exports = (sequelize) => {
             primaryKey: true,
             allowNull: false,
         },
-        media: {
+        multimedia: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        content: {
+        text: {
             type: DataTypes.TEXT,
             allowNull: false
         }

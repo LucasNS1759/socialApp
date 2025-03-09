@@ -1,6 +1,7 @@
 
+import showAlert from "../../utils/settings/sweetAlertConfig";
 import apiClient from "../apiClient";
-import showAlert from "../../utils/sweetAlertConfig"
+
 
  // cambiar aca  en el logiin y logout el lugar donde mostrar el alert este archivo solo se deberia de encargar de buscar y retorna la informacion del back end no es su responsabilidad mostrar un alert en base a lo que trajo eso deberia de mostrarlo el componente 
 

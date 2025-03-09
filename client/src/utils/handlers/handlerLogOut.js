@@ -1,5 +1,5 @@
-import { logOut } from "../redux/features/user/userSlice";
-import { userLogOut } from "../services/auth/logOut";
+import { logOut } from "../../redux/features/user/userSlice";
+import { userLogOut } from "../../services/auth/logOut";
 
  export const handlerLogOut = async (dispatch) => {
     try {

@@ -67,12 +67,12 @@ Comment.belongsTo(User, { foreignKey: "UserId" });
 /****************************************************** */
 
 //un post puede tener muchos comentarios
-Post.hasMany(Comment, { foreignKey: "postId" });
+Post.hasMany(Comment, { foreignKey: "postId",onDelete:"CASCADE" });
 //cada comentario pertenece a un post 
 Comment.belongsTo(Post, { foreignKey: "postId" });
 
 /****************************************************** */
-Comment.hasMany(Comment, { as: 'replies', foreignKey: 'parentId' });
+Comment.hasMany(Comment, { as: 'replies', foreignKey: 'parentId',onDelete : "CASCADE" });
 Comment.belongsTo(Comment, { as: 'parent', foreignKey: 'parentId' });
 
 

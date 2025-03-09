@@ -1,7 +1,12 @@
-const PrivacyIcon = ({ privacy }) => {
+import { useSelector } from "react-redux";
+import { selectPostInfo } from "../../redux/features/posts/postSlice";
+
+const PrivacyIcon = () => {
+  const postInformation = useSelector(selectPostInfo);
+
   return (
     <>
-      {privacy ? (
+      {postInformation?.privacy ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"

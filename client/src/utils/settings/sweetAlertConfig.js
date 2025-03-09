@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
-import { hideAlert } from "../redux/features/alerts/alertsSlice";
+import { hideAlert } from "../../redux/features/alerts/alertsSlice";
+
 
 const showAlert = (type, title, text, dispatch) => {
 

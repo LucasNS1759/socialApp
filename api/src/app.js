@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+const http = require("http")
+const server = http.createServer(app);
+server.timeout = 300000; 
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const helmet = require("helmet");

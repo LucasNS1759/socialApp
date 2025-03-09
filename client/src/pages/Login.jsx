@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import {
   loginInitialValue,
   loginValidationSchema,
-} from "../utils/authFormikConfigs";
+} from "../utils/settings/authFormikConfigs";
 import { loginUser } from "../services/auth/loginUser";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";

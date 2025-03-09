@@ -13,7 +13,9 @@ cloudinary.config({
 
 const uploadToCloudinary = async (file) => {
     try {
-        const url = await cloudinary.uploader.upload(file, { resource_type: "auto" })
+        const url = await cloudinary.uploader.upload(file, { resource_type: "auto",
+         timeout: 300000
+        })
         //fs.unlinkSync(file); // Borra el archivo temporal después de subirlo
         return url;
     } catch (error) {
