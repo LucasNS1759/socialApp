@@ -1,32 +1,20 @@
-import {  useQueryClient } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import React, { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { clearPost } from "../redux/features/posts/postSlice";
-import PublicationContainer from "./PublicationContainer";
-import PostModalContent from "./PostModalContent";
+import usePosts from "../../hooks/usePosts";
+import React, { useEffect } from "react";
+import PublicationContainer from "../PublicationContainer";
+import { clearPost } from "../../redux/features/posts/postSlice";
 
-import usePosts from "../hooks/usePosts";
-
-const InfiniteScrollComponent = () => {
-  const { ref, inView } = useInView(); // Hook para detectar si el usuario llegó al final de la página
-  const [selectedPostId, setSelectedPostId] = useState(null); // Estado para el ID del post seleccionado
-  const queryClient = useQueryClient(); // Hook para acceder al queryClient
+const Feed = ({setCurrentView}) => {
+  // Hook para detectar si el usuario llegó al final de la página
+  const { ref, inView } = useInView();
+  // Hook para acceder al queryClient
+  const queryClient = useQueryClient(); 
   const dispatch = useDispatch();
   const postCreated = useSelector((state) => state.post.postCreated); // Estado para detectar si se creó un nuevo post
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePosts();
-  // Función para abrir el modal
-  const openModal = (postId) => {
-    setSelectedPostId(postId);
-    document.body.classList.add("body-no-scroll"); // Bloquear el scroll del fondo
-  };
-
-  // Función para cerrar el modal
-  const closeModal = () => {
-    setSelectedPostId(null);
-    document.body.classList.remove("body-no-scroll"); // Habilitar el scroll del fondo
-  };
 
   // Si scrolleo hasta abajo y hay más datos, hace refetch y los captura y muestra en tiempo real
   useEffect(() => {
@@ -53,16 +41,11 @@ const InfiniteScrollComponent = () => {
             key={`page-${i}`}
           >
             {page.posts.map((post) => {
-              const isModalOpen = selectedPostId === post.id; // Determina si el modal está abierto para este post
-
               return (
                 <React.Fragment key={`post-${post.id}`}>
-                  <PublicationContainer openModal={openModal} post={post} />
+                  <PublicationContainer setCurrentView={setCurrentView} post={post} />
 
                   {/* Modal para mostrar el post en detalle */}
-                  {isModalOpen && (
-                    <PostModalContent post={post} closeModal={closeModal} />
-                  )}
                 </React.Fragment>
               );
             })}
@@ -80,4 +63,4 @@ const InfiniteScrollComponent = () => {
   );
 };
 
-export default InfiniteScrollComponent;
+export default Feed;

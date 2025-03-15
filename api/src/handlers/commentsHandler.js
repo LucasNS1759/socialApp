@@ -5,12 +5,12 @@ const getRepliesPaginatedController = require("../controllers/comments/getReplie
 
 
 const postNewCommentHandler = async (req, res, next) => {
-    const { postId, parentId, content, media } = req.body;
+    const { postId, parentId, text, media } = req.body;
     const userId = req.user.dataValues.id
     console.log(userId);
     try {
         const response = await createCommentOrReplyController(
-            postId, parentId, userId, content, media)
+            postId, parentId, userId, text, media)
         res.status(200).json(response);
     } catch (error) {
         next(error);

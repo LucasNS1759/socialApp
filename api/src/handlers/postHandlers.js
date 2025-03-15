@@ -1,6 +1,7 @@
 const { uploadToCloudinary } = require("../config/cloudinaryService");
 const createNewPostController = require("../controllers/post/createNewPostController");
 const getAllPostsController = require("../controllers/post/getAllPostsController");
+const getThreadPostController = require("../controllers/post/getThreadPostController");
 
 
 
@@ -18,9 +19,13 @@ const createNewPostHandler = async (req, res, next) => {
     }
 }
 
-const getUserPostsHandler = async (req, res, next) => {
+const getThreadPostsHandler = async (req, res, next) => {
+    const { id } = req.params
+    const { page = 1, limit = 5 } = req.query;
+   console.log(id)
     try {
-
+        const response = await getThreadPostController(id, page, limit)
+        res.status(200).json(response);
     } catch (error) {
 
         next(error);
@@ -40,7 +45,7 @@ const getAllPostsHandler = async (req, res, next) => {
 
 const uploadMultimediaHandler = async (req, res, next) => {
 
-  
+
     const fileBuffer = req.file.buffer.toString("base64");
 
     try {
@@ -56,6 +61,6 @@ const uploadMultimediaHandler = async (req, res, next) => {
 module.exports = {
     createNewPostHandler,
     getAllPostsHandler,
-    getUserPostsHandler,
+    getThreadPostsHandler,
     uploadMultimediaHandler
 }
